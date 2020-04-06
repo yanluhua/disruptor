@@ -79,10 +79,15 @@ abstract class RingBufferFields<E> extends RingBufferPad
         fill(eventFactory);
     }
 
+    /**
+     * 内存预加载机制的核心实现
+     * @param eventFactory
+     */
     private void fill(EventFactory<E> eventFactory)
     {
         for (int i = 0; i < bufferSize; i++)
         {
+            //默认一个新的对象，属性是null
             entries[BUFFER_PAD + i] = eventFactory.newInstance();
         }
     }
@@ -210,8 +215,10 @@ public final class RingBuffer<E> extends RingBufferFields<E> implements Cursored
     {
         switch (producerType)
         {
+            //单生产者
             case SINGLE:
                 return createSingleProducer(factory, bufferSize, waitStrategy);
+                //多生产者
             case MULTI:
                 return createMultiProducer(factory, bufferSize, waitStrategy);
             default:

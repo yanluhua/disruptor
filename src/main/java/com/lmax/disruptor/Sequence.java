@@ -18,8 +18,9 @@ package com.lmax.disruptor;
 import sun.misc.Unsafe;
 
 import com.lmax.disruptor.util.Util;
-
-
+//使用空间，换区时间，提升缓存的性能，减少不必要的系统竞争
+//缓存行
+//左边填充7个值
 class LhsPadding
 {
     protected long p1, p2, p3, p4, p5, p6, p7;
@@ -29,7 +30,7 @@ class Value extends LhsPadding
 {
     protected volatile long value;
 }
-
+//右边填充7个值
 class RhsPadding extends Value
 {
     protected long p9, p10, p11, p12, p13, p14, p15;
